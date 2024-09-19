@@ -27,5 +27,24 @@ contract Payment {
         isPaid = true;
         paymentTime = block.timestamp;
     }
+
+    function withdraw() public {
+        require(msg.sender == payee, "Only payee can withdraw payment");
+        require(isPaid, "Payment has not been made yet");
+
+        payable(payee).transfer(address(this).balance);
+    }
+
+    function refund() public {
+        require(msg.sender == payer, "Only payer can request refund");
+        require(!isPaid, "Payment has been made already");
+        require(block.timestamp > paymentDeadline, "Payment deadline has not passed yet");
+
+        payable(payer).transfer(address(this).balance);
+    }
+
+    function getBalance() public view returns (uint256) {
+        return address(this).balance;
+    }
 }
 
