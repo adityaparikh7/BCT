@@ -56,27 +56,27 @@ class Blockchain:
         print("Blockchain is valid")
         return True
 
-    def modify_block_data(self, block_index, transaction_index, new_data):
-        if block_index < 1 or block_index >= len(self.chain):
-            print("Invalid block index.")
-            return
+    # def modify_block_data(self, block_index, transaction_index, new_data):
+    #     if block_index < 1 or block_index >= len(self.chain):
+    #         print("Invalid block index.")
+    #         return
 
-        block = self.chain[block_index]
-        if transaction_index < 0 or transaction_index >= len(block.data):
-            print("Invalid transaction index.")
-            return
+    #     block = self.chain[block_index]
+    #     if transaction_index < 0 or transaction_index >= len(block.data):
+    #         print("Invalid transaction index.")
+    #         return
 
-        print(f"Original Data: {block.data[transaction_index]}")
-        block.data[transaction_index] = new_data
-        print(f"New Data: {block.data[transaction_index]}")
+    #     print(f"Original Data: {block.data[transaction_index]}")
+    #     block.data[transaction_index] = new_data
+    #     print(f"New Data: {block.data[transaction_index]}")
 
-        # Re-mine the block since the data has changed
-        print(f"Re-mining block {block_index}...")
-        block.mine_block()
+    #     # Re-mine the block since the data has changed
+    #     print(f"Re-mining block {block_index}...")
+    #     block.mine_block()
 
-        # Ensure the next block points to the new hash
-        if block_index < len(self.chain) - 1:
-            self.chain[block_index + 1].previous_hash = block.hash
+    #     # Ensure the next block points to the new hash
+    #     if block_index < len(self.chain) - 1:
+    #         self.chain[block_index + 1].previous_hash = block.hash
 
 
 def main():
@@ -101,19 +101,19 @@ def main():
     blockchain.is_chain_valid()
 
     # Option to modify block data
-    while True:
-        modify = input("Do you want to modify any block data? (yes/no): ").lower()
-        if modify == 'yes':
-            block_index = int(input("Enter the block index to modify (1 to n): "))
-            transaction_index = int(input(f"Enter the transaction index in block {block_index}: "))
-            new_data = input("Enter the new data: ")
+    # while True:
+    #     modify = input("Do you want to modify any block data? (yes/no): ").lower()
+    #     if modify == 'yes':
+    #         block_index = int(input("Enter the block index to modify (1 to n): "))
+    #         transaction_index = int(input(f"Enter the transaction index in block {block_index}: "))
+    #         new_data = input("Enter the new data: ")
 
-            blockchain.modify_block_data(block_index, transaction_index, new_data)
+    #         blockchain.modify_block_data(block_index, transaction_index, new_data)
 
-            print("\nBlockchain verification after modification:")
-            blockchain.is_chain_valid()
-        else:
-            break
+    #         print("\nBlockchain verification after modification:")
+    #         blockchain.is_chain_valid()
+    #     else:
+    #         break
 
     print("\nBlockchain Data:")
     print("------------------------------------------------------------------------------")

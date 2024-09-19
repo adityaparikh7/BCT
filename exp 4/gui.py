@@ -14,6 +14,7 @@ class Block:
         self.difficulty = difficulty
         self.nonce = 0
         self.hash = self.calculate_hash()
+        self.mining_duration = 0
 
     def calculate_hash(self):
         block_contents = str(self.index) + self.previous_hash + \
@@ -22,10 +23,13 @@ class Block:
 
     def mine_block(self):
         target = '0' * self.difficulty
+        start_time = time.time() 
         while self.hash[:self.difficulty] != target:
             self.nonce += 1
             self.hash = self.calculate_hash()
-        print(f"Block mined: {self.hash}")
+        end_time = time.time()
+        self.mining_duration = end_time - start_time
+        print(f"Block mined: {self.hash} in {self.mining_duration:.2f} seconds")
 
 
 class Blockchain:
@@ -72,7 +76,7 @@ class BlockchainApp:
         self.validate_button.pack(pady=10)
 
         self.blockchain_display = scrolledtext.ScrolledText(
-            root, width=100, height=20)
+            root, width=100, height=60)
         self.blockchain_display.pack(pady=10)
         self.display_blockchain()
 
@@ -114,7 +118,8 @@ class BlockchainApp:
                          f"Hash: {block.hash}\n" \
                          f"Previous Hash: {block.previous_hash}\n" \
                          f"Data: {block.data}\n" \
-                         f"Timestamp: {datetime.datetime.fromtimestamp(block.timestamp)}\n"
+                         f"Timestamp: {datetime.datetime.fromtimestamp(block.timestamp)}\n" \
+                         f"Mining Duration: {block.mining_duration:.2f} seconds\n"
             self.blockchain_display.insert(
                 tk.END, block_info + "\n" + "-"*100 + "\n")
 
